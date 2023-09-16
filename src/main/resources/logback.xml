@@ -1,0 +1,8 @@
+<configuration>
+    <!-- Other configurations -->
+
+    <!-- Configure debug logging for Spring -->
+    <logger name="org.springframework" level="debug" />
+
+    <!-- Other loggers and appenders -->
+</configuration>

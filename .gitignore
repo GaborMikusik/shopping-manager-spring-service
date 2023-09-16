@@ -1,0 +1,13 @@
+# Java
+*.class
+*.war
+*.ear
+.gradle/
+target/
+build/
+
+# Spring Boot
+.mvn
+.sts4-cache
+.vscode
+.idea
