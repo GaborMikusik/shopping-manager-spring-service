@@ -7,7 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import javax.persistence.EntityNotFoundException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,21 +19,11 @@ public class ShoppingListDAOImpl implements ShoppingListDAO {
 
     @Override
     public ShoppingList createShoppingList(Long userId, ShoppingList shoppingList) {
-//        String query = "insert into ShoppingList (name, description, paid, items, created_by, updated_by, created_at, updated_at) values (?,?,?,?,?,?,NOW(),NOW())";
-//        try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(query)) {
-//            ps.setString(1, shoppingList.getName());
-//            ps.setString(2, shoppingList.getDescription());
-//            ps.setBoolean(3, shoppingList.isPaid());
-//            ps.setObject(4, shoppingList.getItems());
-//            ps.executeUpdate();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
         return null;
     }
 
     @Override
-    public List<ShoppingList> getShoppingList(Long userId) {
+    public List<ShoppingList> getShoppingLists(Long userId) {
         final String query = "SELECT * FROM shopping_list WHERE created_by = ?";
 
         return getShoppingLists(userId, query);
@@ -123,10 +114,20 @@ public class ShoppingListDAOImpl implements ShoppingListDAO {
         shoppingList.setName(rs.getString("name"));
         shoppingList.setDescription(rs.getString("description"));
         shoppingList.setPaid(rs.getBoolean("paid"));
-        shoppingList.setCreatedAt(((LocalDateTime) rs.getObject("created_at")).toInstant(ZoneOffset.UTC));
-        shoppingList.setUpdatedAt(((LocalDateTime) rs.getObject("updated_at")).toInstant(ZoneOffset.UTC));
+        shoppingList.setCreatedAt(convertToInstant(rs, "created_at"));
+        shoppingList.setUpdatedAt(convertToInstant(rs, "updated_at"));
         shoppingList.setCreatedBy(rs.getLong("created_by"));
         shoppingList.setUpdatedBy(rs.getLong("updated_by"));
         return shoppingList;
+    }
+
+    private static Instant convertToInstant(ResultSet rs, String columnName) throws SQLException {
+        Object object = rs.getObject(columnName);
+        if (object instanceof java.sql.Timestamp) {
+            return ((java.sql.Timestamp) object).toInstant();
+        } else if (object instanceof java.sql.Date) {
+            return ((java.sql.Date) object).toLocalDate().atStartOfDay().toInstant((ZoneOffset) ZoneId.of("UTC"));
+        }
+        throw new IllegalArgumentException("Unsupported data type for column: " + columnName);
     }
 }

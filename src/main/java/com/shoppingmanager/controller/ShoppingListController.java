@@ -14,7 +14,7 @@ public class ShoppingListController {
 
     @RequestMapping(value = "/getlists", method = RequestMethod.GET)
     public @ResponseBody List<ShoppingList> getLists(@RequestParam(name = "userId") Long userId) {
-        return this.shoppingListDAO.getShoppingList(userId);
+        return this.shoppingListDAO.getShoppingLists(userId);
     }
 
     @RequestMapping(value = "/actuallists", method = RequestMethod.GET)

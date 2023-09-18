@@ -7,7 +7,7 @@ import java.util.List;
 public interface ShoppingListDAO {
     ShoppingList createShoppingList(final Long userId, final ShoppingList shoppingList);
 
-    List<ShoppingList> getShoppingList(Long userId);
+    List<ShoppingList> getShoppingLists(Long userId);
 
     List<ShoppingList> getShoppingLists(final List<Long> ids);
 
