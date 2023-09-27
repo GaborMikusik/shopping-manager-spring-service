@@ -2,7 +2,6 @@ import com.shoppingmanager.dao.shoppinglist.ShoppingListDAO;
 import com.shoppingmanager.dao.shoppinglist.ShoppingListDAOImpl;
 import com.shoppingmanager.model.shopping.ShoppingList;
 import configuration.TestDataSourceConfig;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +19,9 @@ import static org.junit.Assert.*;
 @ContextConfiguration(classes = TestDataSourceConfig.class)
 @Import({ShoppingListDAOImpl.class})
 @Transactional
-public class ShoppingListDAOImplIntegrationTest {
+public class ShoppingListDAOIntegrationTest {
     @Autowired
     private ShoppingListDAO shoppingListDAO;
-
-    @Before
-    public void setUp() {
-
-    }
 
     @Test
     @Sql(statements = {
