@@ -20,6 +20,14 @@ public class UserDAOImpl implements UserDAO {
             "WHERE u.id = ? " +
             "GROUP BY u.id";
 
+    private static final String SELECT_USER_BY_USERNAME_OR_EMAIL_QUERY = "SELECT u.id AS user_id, u.name, u.username, u.email, u.password, u.created_at, u.updated_at," +
+            "GROUP_CONCAT(r.name) AS roles " +
+            "FROM users u " +
+            "LEFT JOIN user_roles ur ON u.id = ur.user_id " +
+            "LEFT JOIN roles r ON ur.role_id = r.id " +
+            "WHERE u.username = ? OR u.email = ? " +
+            "GROUP BY u.id";
+
     @Override
     public User save(User user) {
         final String query = "INSERT INTO users (name, username, email, password, created_at, updated_at) VALUES (?,?,?,?,NOW(),NOW())";
@@ -45,6 +53,15 @@ public class UserDAOImpl implements UserDAO {
     public User getById(Long userId) {
         try {
             return jdbcTemplate.queryForObject(SELECT_USER_BY_ID_QUERY, (rs, rowNum) -> UserDAOHelper.getUser(rs), userId);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    @Override
+    public User getUserByNameOrEmail(String usernameOrEmail) {
+        try {
+            return jdbcTemplate.queryForObject(SELECT_USER_BY_USERNAME_OR_EMAIL_QUERY, (rs, rowNum) -> UserDAOHelper.getUser(rs), usernameOrEmail, usernameOrEmail);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }

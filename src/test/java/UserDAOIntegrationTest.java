@@ -100,6 +100,23 @@ public class UserDAOIntegrationTest {
         assertUser(updatedUser, user.getName(), user.getUsername(), user.getEmail(), user.getPassword(), Set.of(new Role(RoleName.ROLE_ADMIN)));
     }
 
+    @Test
+    @Sql(statements = {
+            "INSERT INTO users (id, name, username, email, password, created_at, updated_at) VALUES (2, 'testname', 'testusername', 'test@email', 'testpassword', current_timestamp, current_timestamp)",
+            "INSERT INTO user_roles (user_id, role_id) VALUES (2, 1)"
+    }, executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(statements = {
+            "DELETE FROM user_roles",
+            "DELETE FROM users"
+    }, executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
+    public void testGetUserByUsernameOREmail() {
+        User user = this.userDAO.getUserByNameOrEmail("testusername");
+        assertUser(user, "testname", "testusername", "test@email", "testpassword", Set.of(new Role(RoleName.ROLE_USER)));
+
+        user = this.userDAO.getUserByNameOrEmail("test@email");
+        assertUser(user, "testname", "testusername", "test@email", "testpassword", Set.of(new Role(RoleName.ROLE_USER)));
+    }
+
     private void assertUser(final User user, final String name, final String username, final String email, final String password, Set<Role> roles) {
         assertEquals(name, user.getName());
         assertEquals(username, user.getUsername());
