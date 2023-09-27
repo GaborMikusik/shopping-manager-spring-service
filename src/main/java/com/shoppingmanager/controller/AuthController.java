@@ -1,14 +1,11 @@
 package com.shoppingmanager.controller;
 
 import com.shoppingmanager.dao.user.UserDAO;
-import com.shoppingmanager.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 public class AuthController {
@@ -18,7 +15,8 @@ public class AuthController {
 
     @RequestMapping(value = "/createuser", method = RequestMethod.GET)
     public @ResponseBody String createUser() {
-        List<User> users = this.userDAO.getAll();
-        return users.toString();
+//        List<User> users = this.userDAO.getAll();
+//        return users.toString();
+        return "Create User";
     }
 }
