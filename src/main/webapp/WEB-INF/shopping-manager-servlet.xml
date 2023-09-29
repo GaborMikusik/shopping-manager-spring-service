@@ -19,9 +19,7 @@
 
     <bean id="shoppingListController" class="com.shoppingmanager.controller.ShoppingListController"/>
 
-    <bean id="userDAO" class="com.shoppingmanager.dao.user.UserDAOImpl">
-        <property name="dataSource" ref="dataSource"/>
-    </bean>
+    <bean id="userDAO" class="com.shoppingmanager.dao.user.UserDAOImpl"/>
 
     <bean id="shoppingListDAO" class="com.shoppingmanager.dao.shoppinglist.ShoppingListDAOImpl"/>
 
@@ -52,5 +50,7 @@
             </list>
         </property>
     </bean>
+
+    <bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
 </beans>
