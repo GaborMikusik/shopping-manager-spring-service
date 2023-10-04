@@ -23,8 +23,8 @@ public class SecurityAppConfig extends WebSecurityConfigurerAdapter {
     private CustomUserDetailsService userDetailsService;
 
     @Bean
-    public UserFilter userFilter() {
-        return new UserFilter();
+    public JwtAuthenticationFilter userFilter() {
+        return new JwtAuthenticationFilter();
     }
 
     @Override

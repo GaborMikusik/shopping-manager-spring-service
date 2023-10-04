@@ -17,7 +17,6 @@ import org.springframework.transaction.PlatformTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-//@EnableWebMvc
 @ComponentScan(basePackages = "com.shoppingmanager")
 public class TestDataSourceConfig {
     @Bean
