@@ -4,20 +4,25 @@ import com.shoppingmanager.dao.shoppinglist.ShoppingListDAO;
 import com.shoppingmanager.dao.shoppinglist.ShoppingListDAOImpl;
 import com.shoppingmanager.dao.user.UserDAO;
 import com.shoppingmanager.dao.user.UserDAOImpl;
+import com.shoppingmanager.security.jwt.JwtAuthenticationEntryPoint;
+import com.shoppingmanager.security.service.AuthService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import javax.sql.DataSource;
 
 @Configuration
 @ComponentScan(basePackages = "com.shoppingmanager")
+@EnableWebSecurity
 public class TestDataSourceConfig {
     @Bean
     public DataSource dataSource() {
@@ -52,4 +57,18 @@ public class TestDataSourceConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthService authService() {
+        return new AuthService();
+    }
+
+    @Bean
+    public JwtAuthenticationEntryPoint unauthorizedHandler() {
+        return new JwtAuthenticationEntryPoint();
+    }
+
+    @Bean
+    public HandlerMappingIntrospector mvcHandlerMappingIntrospector() {
+        return new HandlerMappingIntrospector();
+    }
 }

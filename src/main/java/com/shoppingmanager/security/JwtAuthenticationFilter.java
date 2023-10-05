@@ -1,6 +1,7 @@
 package com.shoppingmanager.security;
 
 import com.shoppingmanager.security.jwt.JwtTokenProvider;
+import com.shoppingmanager.security.service.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

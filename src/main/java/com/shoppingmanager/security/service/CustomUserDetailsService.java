@@ -1,7 +1,8 @@
-package com.shoppingmanager.security;
+package com.shoppingmanager.security.service;
 
 import com.shoppingmanager.dao.user.UserDAO;
 import com.shoppingmanager.model.User;
+import com.shoppingmanager.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
