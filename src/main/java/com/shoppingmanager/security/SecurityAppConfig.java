@@ -49,21 +49,21 @@ public class SecurityAppConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors()
+                .cors().and()
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/signin", "/signup")
+                .permitAll()
+                .anyRequest().authenticated()
                 .and()
-                .csrf()
-                .disable()
                 .exceptionHandling()
                 .authenticationEntryPoint(unauthorizedHandler)
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                .antMatchers("/signin", "/signup").permitAll()
-                .anyRequest().authenticated()
+                .httpBasic()
                 .and()
-                .httpBasic();
-        http.addFilterBefore(userFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(userFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

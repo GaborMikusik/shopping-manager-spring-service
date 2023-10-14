@@ -16,7 +16,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>3.8.1</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -108,7 +108,7 @@
             <version>8.0.32</version>
         </dependency>
         <!-- H2 Database for in-memory database testing -->
-         <dependency>
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>2.1.212</version>
@@ -135,7 +135,7 @@
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.5.1</version>
+            <version>3.6.0</version>
             <scope>test</scope>
         </dependency>
 
@@ -156,6 +156,18 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>0.11.2</version>
             <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>3.10.0</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

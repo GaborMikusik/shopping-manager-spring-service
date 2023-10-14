@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 public class AuthController {
 
@@ -20,7 +21,7 @@ public class AuthController {
     AuthService authService;
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    public @ResponseBody ResponseEntity<SignInResponse> authenticateUser(@Valid @RequestBody final SignInRequest request) {
+    public @ResponseBody ResponseEntity<SignInResponse> authenticateUser(@Valid @RequestBody final SignInRequest request) throws Exception {
         return ResponseEntity.ok(this.authService.signIn(request));
     }
 

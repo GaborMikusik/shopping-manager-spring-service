@@ -50,21 +50,13 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getById(Long userId) {
-        try {
-            return jdbcTemplate.queryForObject(SELECT_USER_BY_ID_QUERY, (rs, rowNum) -> UserDAOHelper.getUser(rs), userId);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+    public User getById(Long userId) throws EmptyResultDataAccessException {
+        return jdbcTemplate.queryForObject(SELECT_USER_BY_ID_QUERY, (rs, rowNum) -> UserDAOHelper.getUser(rs), userId);
     }
 
     @Override
-    public User getUserByNameOrEmail(String usernameOrEmail) {
-        try {
-            return jdbcTemplate.queryForObject(SELECT_USER_BY_USERNAME_OR_EMAIL_QUERY, (rs, rowNum) -> UserDAOHelper.getUser(rs), usernameOrEmail, usernameOrEmail);
-        } catch (EmptyResultDataAccessException e) {
-            return null;
-        }
+    public User getUserByNameOrEmail(String usernameOrEmail) throws EmptyResultDataAccessException {
+        return jdbcTemplate.queryForObject(SELECT_USER_BY_USERNAME_OR_EMAIL_QUERY, (rs, rowNum) -> UserDAOHelper.getUser(rs), usernameOrEmail, usernameOrEmail);
     }
 
     @Override

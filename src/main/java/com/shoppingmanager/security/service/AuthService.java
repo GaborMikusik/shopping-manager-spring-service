@@ -1,6 +1,7 @@
 package com.shoppingmanager.security.service;
 
 import com.shoppingmanager.dao.user.UserDAO;
+import com.shoppingmanager.exception.UserAlreadyExistsException;
 import com.shoppingmanager.model.User;
 import com.shoppingmanager.payload.SignInRequest;
 import com.shoppingmanager.payload.SignInResponse;
@@ -43,12 +44,12 @@ public class AuthService {
     public SignUpResponse signUp(final SignUpRequest request) {
         User user = this.userDAO.getUserByNameOrEmail(request.getUsername());
         if (user != null) {
-            return null;
+            throw new UserAlreadyExistsException(AuthServiceMessages.USERNAME_ALREADY_EXISTS);
         }
 
         user = userDAO.getUserByNameOrEmail(request.getEmail());
         if (user != null) {
-            return null;
+            throw new UserAlreadyExistsException(AuthServiceMessages.EMAIL_ALREADY_EXISTS);
         }
 
         user = new User(request.getName(), request.getUsername(),
@@ -58,6 +59,6 @@ public class AuthService {
 
         this.userDAO.save(user);
 
-        return new SignUpResponse(true, "User registered successfully");
+        return new SignUpResponse(true, AuthServiceMessages.SUCCESSFUL_REGISTRATION);
     }
 }
